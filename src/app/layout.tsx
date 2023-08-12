@@ -1,11 +1,16 @@
 import { ThemeRegistry } from '@/theme/ThemeRegistry';
+import { ReactNode } from 'react';
 
 export const metadata = {
   title: 'Next App with MUI5',
   description: 'next app with mui5',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+type Props = {
+  children: ReactNode;
+};
+
+export default async function RootLayout({ children }: Props) {
   return (
     <html lang="en">
       <body>

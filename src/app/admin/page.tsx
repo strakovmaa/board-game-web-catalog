@@ -1,12 +1,10 @@
 import { kv } from '@vercel/kv';
 import SaveButton from './SaveButton';
-import DbManager from './DbManager';
+import Admin, { DbScanType } from '@/layouts/Admin/Admin';
 
-export type DcScan = Record<string, unknown>;
-
-export default async function Db({ params }) {
+export default async function DbScan({ params }) {
   const getDbScan = async () => {
-    const result: DcScan = {};
+    const result: DbScanType = {};
 
     // scan for keys
     for await (const key of kv.scanIterator()) {
@@ -20,14 +18,8 @@ export default async function Db({ params }) {
   const dbScan = await getDbScan();
 
   return (
-    <div>
-      <h1>DB SCAN</h1>
-
+    <Admin dbScan={dbScan}>
       <SaveButton />
-
-      <hr />
-      <h2>Scan</h2>
-      <DbManager dbScan={dbScan} />
-    </div>
+    </Admin>
   );
 }

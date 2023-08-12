@@ -2,9 +2,13 @@
 
 import Container from '@mui/material/Container';
 import { Layout } from '../Layout';
-import ReactJson from 'react-json-view';
 import { ReactNode } from 'react';
 import { Typography } from '@mui/material';
+import dynamic from 'next/dynamic';
+
+const ReactJson = dynamic(() => import('react-json-view'), {
+  ssr: false,
+});
 
 export type DbScanType = Record<string, unknown>;
 

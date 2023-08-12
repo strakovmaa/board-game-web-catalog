@@ -1,8 +1,8 @@
 import { kv } from '@vercel/kv';
-import SaveButton from './SaveButton';
 import Admin, { DbScanType } from '@/layouts/Admin/Admin';
+import Buttons from './Buttons';
 
-export default async function DbScan({ params }) {
+export default async function DbScan() {
   const getDbScan = async () => {
     const result: DbScanType = {};
 
@@ -19,7 +19,7 @@ export default async function DbScan({ params }) {
 
   return (
     <Admin dbScan={dbScan}>
-      <SaveButton />
+      <Buttons />
     </Admin>
   );
 }

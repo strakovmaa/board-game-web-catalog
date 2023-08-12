@@ -5,9 +5,12 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { Card } from '@mui/material';
 import { Link } from '@/components';
+import { useTranslations } from 'next-intl';
 import { Layout } from '../Layout';
 
 export default function Home() {
+  const t = useTranslations();
+
   return (
     <Layout>
       <Container maxWidth="lg">
@@ -22,7 +25,7 @@ export default function Home() {
         >
           <Card sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', p: 1 }} elevation={3}>
             <Typography variant="h2" gutterBottom>
-              Material UI - Next.js example using App Router in TypeScript
+              {t('card.title')}
             </Typography>
             <Typography variant="h3" gutterBottom>
               Material UI - Next.js example using App Router in TypeScript

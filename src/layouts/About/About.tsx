@@ -5,8 +5,11 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { Link } from '@/components';
 import { Layout } from '../Layout';
+import { useTranslations } from 'next-intl';
 
 export default function About() {
+  const t = useTranslations();
+
   return (
     <Layout>
       <Container maxWidth="lg">
@@ -20,7 +23,7 @@ export default function About() {
           }}
         >
           <Typography variant="h4" component="h1" gutterBottom>
-            Material UI - Next.js example using App Router in TypeScript
+            {t('component.title')}
           </Typography>
           <Link href="/">Go to the main page</Link>
         </Box>

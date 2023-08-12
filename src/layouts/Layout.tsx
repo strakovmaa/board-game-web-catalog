@@ -1,5 +1,6 @@
 'use client';
 
+import { LangSwitch } from '@/components';
 import { ReactNode } from 'react';
 
 type Props = {
@@ -7,5 +8,10 @@ type Props = {
 };
 
 export function Layout({ children }: Props) {
-  return <>{children}</>;
+  return (
+    <>
+      <LangSwitch />
+      {children}
+    </>
+  );
 }

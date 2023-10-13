@@ -1,6 +1,6 @@
 import { kv } from '@vercel/kv';
 import Admin, { DbScanType } from '@/layouts/Admin/Admin';
-import Buttons from './Buttons';
+import { getGameList } from '@/actions';
 
 export default async function DbScan() {
   const getDbScan = async () => {
@@ -16,10 +16,7 @@ export default async function DbScan() {
   };
 
   const dbScan = await getDbScan();
+  const gameList = await getGameList();
 
-  return (
-    <Admin dbScan={dbScan}>
-      <Buttons />
-    </Admin>
-  );
+  return <Admin dbScan={dbScan} gameList={gameList} />;
 }

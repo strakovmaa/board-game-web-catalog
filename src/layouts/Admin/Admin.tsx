@@ -2,29 +2,22 @@
 
 import Container from '@mui/material/Container';
 import { Layout } from '../Layout';
-import { ReactNode } from 'react';
-import { Typography } from '@mui/material';
-import dynamic from 'next/dynamic';
-
-const ReactJson = dynamic(() => import('react-json-view'), {
-  ssr: false,
-});
+import { CsvLoader, DbScan } from './components';
+import { Game } from '@/types';
 
 export type DbScanType = Record<string, unknown>;
 
 type Props = {
-  children: ReactNode;
   dbScan: DbScanType;
+  gameList: Game[];
 };
 
-export default function Admin({ children, dbScan }: Props) {
+export default function Admin({ dbScan, gameList }: Props) {
   return (
     <Layout>
       <Container maxWidth="lg">
-        <Typography variant="h2">DB Scan</Typography>
-        {children}
-        <Typography variant="h2">Scan</Typography>
-        <ReactJson src={dbScan} theme="pop" />
+        <DbScan dbScan={dbScan} />
+        <CsvLoader gameList={gameList} />
       </Container>
     </Layout>
   );

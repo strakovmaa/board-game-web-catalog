@@ -2,7 +2,7 @@
 
 import Container from '@mui/material/Container';
 import { Layout } from '../Layout';
-import { CsvLoader, DbScan } from './components';
+import { BggLoader, CsvLoader, DbScan } from './components';
 import { Game } from '@/types';
 
 export type DbScanType = Record<string, unknown>;
@@ -18,6 +18,7 @@ export default function Admin({ dbScan, gameList }: Props) {
       <Container maxWidth="lg">
         <DbScan dbScan={dbScan} />
         <CsvLoader gameList={gameList} />
+        <BggLoader gameList={gameList} />
       </Container>
     </Layout>
   );

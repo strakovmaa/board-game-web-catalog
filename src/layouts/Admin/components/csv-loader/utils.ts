@@ -32,7 +32,7 @@ export const getGameFromCsv = (csvGame: CsvGameWithNotes): Game => {
 
   return {
     uid: getGameUid(csvGame, langs),
-    sourceName: csvGame[CsvColumns.SOURCE_NAME],
+    sourceName: csvGame[CsvColumns.SOURCE_NAME].toString(),
     id: parseInt(csvGame[CsvColumns.ID]) || undefined,
     langs,
     notes: csvGame.notes,

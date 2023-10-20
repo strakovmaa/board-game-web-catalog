@@ -2,23 +2,49 @@
 
 import Container from '@mui/material/Container';
 import { Layout } from '../Layout';
-import { BggLoader, CsvLoader, DbScan } from './components';
-import { Game } from '@/types';
-
-export type DbScanType = Record<string, unknown>;
+import { BggLoader, CsvLoader, GameListRecordDetail, GameListRecords } from './components';
+import { GameListRecord } from '@/actions/types';
+import { useState } from 'react';
 
 type Props = {
-  dbScan: DbScanType;
-  gameList: Game[];
+  gameListRecords: GameListRecord[];
+  activeGameListRecord?: number;
 };
 
-export default function Admin({ dbScan, gameList }: Props) {
+export default function Admin({ gameListRecords, activeGameListRecord }: Props) {
+  const [selectedRecordId, setSelectedRecordId] = useState<number>();
+  const [showCreatePage, setShowCreatePage] = useState(false);
+  const selectedRecord = gameListRecords.find(({ recordId }) => recordId === selectedRecordId);
+
+  const onShowCreatePage = () => {
+    setShowCreatePage(true);
+    setSelectedRecordId(undefined);
+  };
+
+  const handleSelectRecord = (recordId?: number) => {
+    setShowCreatePage(false);
+    setSelectedRecordId(recordId);
+  };
+
   return (
     <Layout>
       <Container maxWidth="lg">
-        <DbScan dbScan={dbScan} />
-        <CsvLoader gameList={gameList} />
-        <BggLoader gameList={gameList} />
+        <GameListRecords
+          gameListRecords={gameListRecords}
+          selectedRecordId={selectedRecordId}
+          handleSelectRecord={handleSelectRecord}
+          onShowCreatePage={onShowCreatePage}
+          activeGameListRecord={activeGameListRecord}
+        />
+        {showCreatePage && <CsvLoader handleSelectRecord={handleSelectRecord} />}
+        {!!selectedRecordId && (
+          <GameListRecordDetail
+            selectedRecordId={selectedRecordId}
+            handleSelectRecord={handleSelectRecord}
+            activeGameListRecord={activeGameListRecord}
+          />
+        )}
+        {!!selectedRecord && <BggLoader selectedRecord={selectedRecord} />}
       </Container>
     </Layout>
   );

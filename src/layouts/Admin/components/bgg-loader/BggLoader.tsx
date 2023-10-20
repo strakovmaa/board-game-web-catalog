@@ -7,13 +7,15 @@ import { Game, LogRecord, Status } from '@/types';
 import { GAME_LIST_SLICE } from '../../config';
 import { processGameList } from '../../utils';
 import { GameList } from '@/components';
-import { saveGameList } from '@/actions';
+import { updateGameListRecord } from '@/actions';
+import { GameListRecord } from '@/actions/types';
+import { unionBy } from 'lodash-es';
 
 type Props = {
-  gameList: Game[];
+  selectedRecord: GameListRecord;
 };
 
-export const BggLoader = ({ gameList }: Props) => {
+export const BggLoader = ({ selectedRecord }: Props) => {
   const [_isPending, startTransition] = useTransition();
 
   const [newGameList, setNewGameList] = useState<Game[]>([]);
@@ -23,7 +25,8 @@ export const BggLoader = ({ gameList }: Props) => {
   const processingCount = log.length;
   const processGoalCount = GAME_LIST_SLICE[1] - GAME_LIST_SLICE[0];
 
-  const finishedGameList = useMemo(() => gameList?.filter((game) => game.status === Status.FINISHED), [gameList]);
+  const gameList = selectedRecord.gameList;
+  const finishedGameList = useMemo(() => gameList.filter((game) => game.status === Status.FINISHED), [gameList]);
 
   const handleLoad = async () => {
     if (!gameList.length) {
@@ -40,13 +43,15 @@ export const BggLoader = ({ gameList }: Props) => {
   };
 
   useEffect(() => {
-    const mergedGameList = [...gameList, ...newGameList];
+    const mergedGameList = unionBy([...newGameList, ...gameList], 'uid');
 
-    const handleSaveGameList = async () => {
-      startTransition(() => saveGameList(mergedGameList));
-    };
+    if (selectedRecord && mergedGameList.length) {
+      const handleSaveGameList = async () => {
+        startTransition(() => updateGameListRecord(selectedRecord, mergedGameList));
+      };
 
-    handleSaveGameList();
+      handleSaveGameList();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newGameList]);
 
@@ -54,7 +59,7 @@ export const BggLoader = ({ gameList }: Props) => {
     <>
       <Box my={4}>
         <Typography variant="h2" gutterBottom>
-          Doplnění dat z BGG
+          Data z BGG
         </Typography>
 
         <StatusOverview gameList={gameList} />

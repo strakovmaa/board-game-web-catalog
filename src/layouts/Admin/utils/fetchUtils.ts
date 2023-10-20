@@ -5,7 +5,7 @@ export const fetchSearchData = async (parsedName: string) => {
 
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
-    throw new Error('Failed to fetch data');
+    throw new Error('Failed to fetch data', { cause: res.status });
   }
 
   const data = await res.text();
@@ -20,7 +20,7 @@ export const fetchThingData = async (thingId: number) => {
 
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
-    throw new Error('Failed to fetch data');
+    throw new Error('Failed to fetch data', { cause: res.status });
   }
 
   const data = await res.text();

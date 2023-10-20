@@ -1,22 +1,9 @@
-import { kv } from '@vercel/kv';
-import Admin, { DbScanType } from '@/layouts/Admin/Admin';
-import { getGameList } from '@/actions';
+import Admin from '@/layouts/Admin/Admin';
+import { getActiveGameListRecord, getGameListRecords } from '@/actions';
 
 export default async function DbScan() {
-  const getDbScan = async () => {
-    const result: DbScanType = {};
+  const gameListRecords = await getGameListRecords();
+  const activeGameListRecord = await getActiveGameListRecord();
 
-    // scan for keys
-    for await (const key of kv.scanIterator()) {
-      const value = await kv.get(key);
-      result[key] = value;
-    }
-
-    return result;
-  };
-
-  const dbScan = await getDbScan();
-  const gameList = await getGameList();
-
-  return <Admin dbScan={dbScan} gameList={gameList} />;
+  return <Admin gameListRecords={gameListRecords} activeGameListRecord={activeGameListRecord} />;
 }

@@ -1,5 +1,4 @@
 import {
-  Alert,
   Box,
   Paper,
   Stack,
@@ -15,20 +14,22 @@ import { getGameFromCsv, mergeNotesToCsvGame } from './utils';
 import { dataCsv } from '@/data';
 import { useTransition } from 'react';
 import { ButtonAction } from '@/components';
-import { Game } from '@/types';
-import { saveGameList } from '@/actions';
+import { createGameListRecord } from '@/actions';
 
 type Props = {
-  gameList: Game[];
+  handleSelectRecord: (recordId: number) => void;
 };
 
-export const CsvLoader = ({ gameList }: Props) => {
+export const CsvLoader = ({ handleSelectRecord }: Props) => {
   const [isPending, startTransition] = useTransition();
 
   const csvGameList = mergeNotesToCsvGame(dataCsv).map(getGameFromCsv);
 
-  const handleSaveGameList = async () => {
-    startTransition(() => saveGameList(csvGameList));
+  const handleCreateGameList = async () => {
+    startTransition(async () => {
+      const { recordId } = await createGameListRecord(csvGameList);
+      handleSelectRecord(recordId);
+    });
   };
 
   return (
@@ -77,14 +78,10 @@ export const CsvLoader = ({ gameList }: Props) => {
         </Table>
       </TableContainer>
 
-      {gameList.length === csvGameList.length && (
-        <Alert severity="success">V DB i v CSV je {gameList.length} položek</Alert>
-      )}
-
       {!!csvGameList.length && (
         <Stack direction="row" gap={2} my={4}>
-          <ButtonAction color="success" onClick={handleSaveGameList} isPending={isPending}>
-            Uložit CSV do DB
+          <ButtonAction color="success" onClick={handleCreateGameList} isPending={isPending}>
+            Uložit verzi do DB
           </ButtonAction>
         </Stack>
       )}

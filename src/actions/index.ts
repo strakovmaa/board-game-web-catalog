@@ -1,1 +1,2 @@
-export * from './gameList';
+export * from './activeGameListRecord';
+export * from './gameListRecord';

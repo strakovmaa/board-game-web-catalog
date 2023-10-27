@@ -1,5 +1,8 @@
-import Home from '@/layouts/Home/Home';
+import { getGameList } from '@/actions';
+import Search from '@/layouts/Search/Search';
 
-export default function RootPage() {
-  return <Home />;
+export default async function SearchPage() {
+  const gameList = await getGameList();
+
+  return <Search gameList={gameList} />;
 }

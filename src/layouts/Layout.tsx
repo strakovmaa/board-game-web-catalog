@@ -1,6 +1,7 @@
 'use client';
 
-import { LangSwitch } from '@/components';
+import { AppFooter, AppNav } from '@/components';
+import { Box, Stack } from '@mui/material';
 import { ReactNode } from 'react';
 
 type Props = {
@@ -9,9 +10,10 @@ type Props = {
 
 export function Layout({ children }: Props) {
   return (
-    <>
-      <LangSwitch />
-      {children}
-    </>
+    <Stack sx={{ minHeight: '100vh' }}>
+      <AppNav />
+      <Box flexGrow={1}>{children}</Box>
+      <AppFooter />
+    </Stack>
   );
 }

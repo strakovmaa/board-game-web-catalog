@@ -1,5 +1,6 @@
 import { BggGame, BggRank, BggThing } from '@code-bucket/board-game-geek';
 import { CategoryKey, MechanicKey, RankNameKey } from '@/bggData';
+import { useTranslations } from 'next-intl';
 
 export type Rank = Pick<BggRank, 'value'> & {
   name: `${RankNameKey}`;
@@ -65,3 +66,5 @@ export enum LogRecordState {
 export type LogRecord = { sourceName: string; status: LogRecordState; statusMessage?: string };
 
 export type FeedbackRecord = { message: string; timestamp: number; time: string };
+
+export type TFunction = ReturnType<typeof useTranslations<string>>;

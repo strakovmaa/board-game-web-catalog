@@ -12,10 +12,10 @@ import {
   ShowMoreToggler,
   ZhLink,
 } from './components';
-import { MAX_RANK_LIMIT } from './config';
 import { Group, Alarm } from '@mui/icons-material';
 import { Game, Status } from '@/types';
 import { useLocale, useTranslations } from 'next-intl';
+import { MAX_RANK_LIMIT } from '@/config';
 
 type Props = {
   game: Game;

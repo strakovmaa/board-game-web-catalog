@@ -1,3 +1,5 @@
+'use client';
+
 import { Box, Divider, Drawer, IconButton, List } from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
 import { useState, KeyboardEvent, MouseEvent } from 'react';
@@ -33,7 +35,6 @@ export const AppMenu = () => {
             <Divider sx={{ my: 1 }} />
 
             <MenuLink to={Urls.FAQ} i18nKey="faq.pageTitle" />
-            <MenuLink to={Urls.FEEDBACK} i18nKey="feedback.pageTitle" />
 
             <Divider sx={{ my: 1 }} />
 

@@ -65,6 +65,4 @@ export enum LogRecordState {
 
 export type LogRecord = { sourceName: string; status: LogRecordState; statusMessage?: string };
 
-export type FeedbackRecord = { message: string; timestamp: number; time: string };
-
 export type TFunction = ReturnType<typeof useTranslations<string>>;

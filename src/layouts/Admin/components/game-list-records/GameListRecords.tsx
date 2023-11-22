@@ -12,12 +12,12 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { useState, useTransition } from 'react';
-import { ButtonAction } from '@/components';
+import { useState } from 'react';
 import dynamic from 'next/dynamic';
-import { deleteGameListRecords } from '@/actions';
-import { GameListRecord } from '@/actions/types';
-import { Delete } from '@mui/icons-material';
+import { GameListRecord, GameListRecordStatus } from '@/actions/types';
+import { Add, Delete, Done, QueryBuilder, Visibility, VisibilityOff } from '@mui/icons-material';
+import { Status } from '@/types';
+import { ConfirmDeleteModal } from '../confirm-delete-modal';
 
 const ReactJson = dynamic(() => import('react-json-view'), {
   ssr: false,
@@ -38,22 +38,27 @@ export const GameListRecords = ({
   onShowCreatePage,
   activeGameListRecord,
 }: Props) => {
-  const [isPending, startTransition] = useTransition();
   const [showDbScan, setShowDbScan] = useState(false);
 
-  const handleDeleteRecords = async () => {
-    startTransition(() => deleteGameListRecords());
-  };
+  const [isModalOpened, setIsModalOpened] = useState(false);
+  const handleOpenModal = () => setIsModalOpened(true);
+  const handleCloseModal = () => setIsModalOpened(false);
 
   const handleShowDbScan = () => {
     setShowDbScan((prev) => !prev);
   };
 
   const getCellSx = (recordId: number) => ({ fontWeight: activeGameListRecord === recordId ? 'bold' : undefined });
+  const getStatusIcon = (status: `${GameListRecordStatus}`) =>
+    status === GameListRecordStatus.COMPLETED ? (
+      <Done fontSize="small" sx={{ verticalAlign: 'middle' }} />
+    ) : (
+      <QueryBuilder fontSize="small" sx={{ verticalAlign: 'middle' }} />
+    );
 
   return (
     <>
-      <Typography variant="h2" gutterBottom>
+      <Typography variant="h2" gutterBottom mt={4}>
         Verze herní databáze
       </Typography>
 
@@ -61,16 +66,16 @@ export const GameListRecords = ({
         <Table stickyHeader>
           <TableHead>
             <TableRow>
-              <TableCell>Id</TableCell>
+              <TableCell>Aktivní</TableCell>
               <TableCell>Vytvořeno</TableCell>
+              <TableCell>Název</TableCell>
               <TableCell>Status</TableCell>
               <TableCell>Počet položek</TableCell>
-              <TableCell>Aktivní</TableCell>
               <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {gameListRecords?.map(({ recordId, status, gameList }, index) => (
+            {gameListRecords?.map(({ recordId, status, recordName, gameList }, index) => (
               <TableRow
                 key={`${recordId}_${index}`}
                 sx={(theme) => ({
@@ -79,19 +84,23 @@ export const GameListRecords = ({
                 })}
               >
                 <TableCell component="td" scope="row" sx={getCellSx(recordId)}>
-                  {recordId}
+                  {activeGameListRecord === recordId ? (
+                    <Visibility fontSize="small" />
+                  ) : (
+                    <VisibilityOff fontSize="small" color="disabled" />
+                  )}
                 </TableCell>
                 <TableCell component="td" scope="row" sx={getCellSx(recordId)}>
                   {new Date(recordId).toLocaleString()}
                 </TableCell>
                 <TableCell component="td" scope="row" sx={getCellSx(recordId)}>
-                  {status}
+                  {recordName}
                 </TableCell>
                 <TableCell component="td" scope="row" sx={getCellSx(recordId)}>
-                  {gameList.length}
+                  {getStatusIcon(status)} {status}
                 </TableCell>
                 <TableCell component="td" scope="row" sx={getCellSx(recordId)}>
-                  {activeGameListRecord === recordId && 'ANO'}
+                  {gameList?.filter((game) => game.status === Status.FINISHED).length} / {gameList.length}
                 </TableCell>
                 <TableCell component="td" scope="row">
                   <Stack direction={'row'} gap={1}>
@@ -107,10 +116,10 @@ export const GameListRecords = ({
       </TableContainer>
 
       <Stack direction="row" gap={2} alignItems="center" my={4}>
-        <ButtonAction color="error" onClick={handleDeleteRecords} isPending={isPending} startIcon={<Delete />}>
+        <Button variant="contained" color="error" onClick={handleOpenModal} startIcon={<Delete />}>
           Smazat všechny verze
-        </ButtonAction>
-        <Button color="success" variant="outlined" onClick={onShowCreatePage}>
+        </Button>
+        <Button color="success" variant="outlined" onClick={onShowCreatePage} startIcon={<Add />}>
           Vytvořit novou verzi
         </Button>
         <Button color="primary" variant="outlined" onClick={handleShowDbScan}>
@@ -119,6 +128,8 @@ export const GameListRecords = ({
       </Stack>
 
       {showDbScan && <ReactJson src={gameListRecords} theme="pop" />}
+
+      <ConfirmDeleteModal isModalOpened={isModalOpened} handleCloseModal={handleCloseModal} />
     </>
   );
 };

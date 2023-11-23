@@ -1,5 +1,5 @@
-import Admin from '@/layouts/Admin/Admin';
 import { getActiveGameListRecord, getGameListRecords } from '@/actions';
+import Admin from './_components/Admin/Admin';
 
 export default async function AdminPage() {
   const gameListRecords = await getGameListRecords();

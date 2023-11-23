@@ -2,7 +2,7 @@
 
 import Container from '@mui/material/Container';
 import { Layout } from '../Layout';
-import { BggLoader, CsvLoader, GameListRecordDetail, GameListRecords } from './components';
+import { CsvLoader, GameListRecordDetail, GameListRecords } from './components';
 import { GameListRecord } from '@/actions/types';
 import { useState } from 'react';
 import { Divider } from '@mui/material';
@@ -37,17 +37,18 @@ export default function Admin({ gameListRecords, activeGameListRecord }: Props) 
           onShowCreatePage={onShowCreatePage}
           activeGameListRecord={activeGameListRecord}
         />
+
         <Divider sx={{ mb: 3 }} />
+
         {showCreatePage && <CsvLoader handleSelectRecord={handleSelectRecord} />}
-        {!!selectedRecordId && (
+
+        {selectedRecord && (
           <GameListRecordDetail
-            selectedRecordId={selectedRecordId}
             handleSelectRecord={handleSelectRecord}
             activeGameListRecord={activeGameListRecord}
             selectedRecord={selectedRecord}
           />
         )}
-        {!!selectedRecord && <BggLoader selectedRecord={selectedRecord} />}
       </Container>
     </Layout>
   );

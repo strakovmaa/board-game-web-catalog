@@ -1,15 +1,14 @@
 import { Box, Button, LinearProgress, Typography } from '@mui/material';
-import { useEffect, useMemo, useState, useTransition } from 'react';
-import { StatusOverview } from '../status-overview';
+import { useEffect, useState, useTransition } from 'react';
 import { UnfinishedOverview } from '../unfinished-overview';
 import { Log } from '../log';
-import { Game, LogRecord, Status } from '@/types';
+import { Game, LogRecord } from '@/types';
 import { GAME_LIST_SLICE } from '../../config';
 import { processGameList } from '../../utils';
-import { GameList } from '@/components';
 import { updateGameListRecord } from '@/actions';
 import { GameListRecord } from '@/actions/types';
 import { unionBy } from 'lodash-es';
+import { Sync } from '@mui/icons-material';
 
 type Props = {
   selectedRecord: GameListRecord;
@@ -26,7 +25,6 @@ export const BggLoader = ({ selectedRecord }: Props) => {
   const processGoalCount = GAME_LIST_SLICE[1] - GAME_LIST_SLICE[0];
 
   const gameList = selectedRecord.gameList;
-  const finishedGameList = useMemo(() => gameList.filter((game) => game.status === Status.FINISHED), [gameList]);
 
   const handleLoad = async () => {
     if (!gameList.length) {
@@ -59,14 +57,13 @@ export const BggLoader = ({ selectedRecord }: Props) => {
     <>
       <Box my={4}>
         <Typography variant="h2" gutterBottom>
-          Data z BGG
+          BGG loader
         </Typography>
 
-        <StatusOverview gameList={gameList} />
         <UnfinishedOverview gameList={gameList} />
 
         <Box sx={{ display: 'inline-block', position: 'relative' }}>
-          <Button variant="contained" color="info" onClick={handleLoad} disabled={isLoading}>
+          <Button variant="contained" color="info" onClick={handleLoad} disabled={isLoading} startIcon={<Sync />}>
             Načíst BGG pro hry {GAME_LIST_SLICE[0]}-{GAME_LIST_SLICE[1]}
           </Button>
           {isLoading && (
@@ -86,8 +83,6 @@ export const BggLoader = ({ selectedRecord }: Props) => {
       </Box>
 
       <Log log={log} />
-
-      <GameList gameList={finishedGameList} gameTotalCount={finishedGameList?.length} />
     </>
   );
 };

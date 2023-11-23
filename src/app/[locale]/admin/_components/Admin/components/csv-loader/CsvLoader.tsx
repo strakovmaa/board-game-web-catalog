@@ -52,7 +52,7 @@ export const CsvLoader = ({ handleSelectRecord }: Props) => {
   return (
     <Box my={4}>
       <Typography variant="h2" gutterBottom>
-        Vytvořit novou verzi
+        Vytvořit nový seznam
       </Typography>
 
       <Typography variant="h3">Nahrát CSV soubor</Typography>
@@ -71,12 +71,12 @@ export const CsvLoader = ({ handleSelectRecord }: Props) => {
           <CsvPreview gameList={csvGameList} />
 
           <Typography variant="h3" gutterBottom>
-            Název verze
+            Název seznamu
           </Typography>
 
           <Box width="50%">
             <TextField
-              label="Název verze"
+              label="Název seznamu"
               value={recordName}
               fullWidth
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
@@ -86,7 +86,7 @@ export const CsvLoader = ({ handleSelectRecord }: Props) => {
           </Box>
           <Stack direction="row" gap={2} my={4}>
             <ButtonAction color="success" onClick={handleCreateGameList} isPending={isPending}>
-              Uložit verzi do DB
+              Uložit seznam do DB
             </ButtonAction>
           </Stack>
         </>

@@ -1,4 +1,3 @@
-import { ThemeRegistry } from '@/theme/ThemeRegistry';
 import { ReactNode } from 'react';
 import { notFound } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
@@ -35,7 +34,7 @@ export default async function RootLayout({ children, params: { locale } }: Props
     <html lang={locale}>
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <ThemeRegistry>{children}</ThemeRegistry>
+          {children}
         </NextIntlClientProvider>
       </body>
     </html>

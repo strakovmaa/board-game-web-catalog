@@ -45,7 +45,7 @@ export const ConfirmDeleteModal = ({ isModalOpened, handleCloseModal }: Props) =
           </ButtonAction>
 
           <Button variant="text" onClick={handleCloseModal}>
-            Zrušit
+            Zpět
           </Button>
         </Stack>
       </Box>

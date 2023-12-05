@@ -1,5 +1,7 @@
 export enum Urls {
   ADMIN = '/admin',
+  ADMIN_NEW = '/admin/new',
+  ADMIN_USERS = '/admin/users',
   FAQ = '/faq',
   NAME = '/name',
   RANK = '/rank',

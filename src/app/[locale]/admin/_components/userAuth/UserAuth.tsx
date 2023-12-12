@@ -11,7 +11,7 @@ type Props = UseUserAuthReturn & {
 };
 
 export function UserAuth({ userAuthRecord, handleCreateUserAuth, isPending, children }: Props) {
-  const applyAuth = !DISABLE_USER_AUTH_ON_DEVELOPMENT && IS_DEVELOPMENT;
+  const applyAuth = IS_DEVELOPMENT ? !DISABLE_USER_AUTH_ON_DEVELOPMENT : true;
 
   if (applyAuth && userAuthRecord === null) {
     return (

@@ -1,13 +1,14 @@
-import { Alert, AlertTitle, Box, Button, LinearProgress, Typography } from '@mui/material';
-import { useEffect, useState, useTransition } from 'react';
+import { Alert, AlertTitle, Box, Button, LinearProgress, Stack, Typography } from '@mui/material';
+import { useCallback, useEffect, useMemo, useState, useTransition } from 'react';
 import { UnfinishedOverview } from '../unfinished-overview';
 import { Log } from '../log';
-import { Game, LogRecord } from '@/types';
+import { Game, LogRecord, Status } from '@/types';
 import { getEstimatedMinutes, processGameList } from '../../utils';
 import { updateGameListRecord } from '@/actions';
 import { GameListRecord } from '@/actions/types';
-import { unionBy } from 'lodash-es';
+import { isEqual } from 'lodash-es';
 import { Sync } from '@mui/icons-material';
+import { enqueueSnackbar } from 'notistack';
 
 type Props = {
   gameListRecord: GameListRecord;
@@ -21,11 +22,16 @@ export const BggLoader = ({ gameListRecord }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const processingCount = log.length;
-  const gameList = gameListRecord.gameList;
-  const estimatedMinutes = getEstimatedMinutes(gameList);
+
+  const { processingGameList, estimatedMinutes } = useMemo(() => {
+    const processingGameList = gameListRecord.gameList.filter(({ status }) => status !== Status.FINISHED);
+    const estimatedMinutes = Math.max(getEstimatedMinutes(processingGameList), 1);
+
+    return { processingGameList, estimatedMinutes };
+  }, [gameListRecord]);
 
   const handleLoad = async () => {
-    if (!gameList.length) {
+    if (!processingGameList.length) {
       return;
     }
 
@@ -33,23 +39,45 @@ export const BggLoader = ({ gameListRecord }: Props) => {
     setLog([]);
     setIsLoading(true);
 
-    await processGameList(gameList, setNewGameList, setLog);
+    await processGameList(processingGameList, setNewGameList, setLog);
 
     setIsLoading(false);
   };
 
+  const handleSaveGameList = useCallback(
+    async (mergedGameList: Game[]) => {
+      if (gameListRecord && mergedGameList.length) {
+        startTransition(async () => {
+          await updateGameListRecord(gameListRecord, mergedGameList);
+          setNewGameList([]);
+
+          enqueueSnackbar('Načtení her proběhlo úspěšně, nyní můžete opustit stránku', {
+            variant: 'success',
+            persist: true,
+          });
+        });
+      }
+    },
+    [gameListRecord],
+  );
+
   useEffect(() => {
-    const mergedGameList = unionBy([...newGameList, ...gameList], 'uid');
+    if (newGameList.length) {
+      const mergedGameList = gameListRecord.gameList.map(
+        (oldGame) => newGameList.find((game) => oldGame.uid === game.uid) ?? oldGame,
+      );
+      const mergedGameListHasChanges = !isEqual(mergedGameList, gameListRecord.gameList);
 
-    if (gameListRecord && mergedGameList.length) {
-      const handleSaveGameList = async () => {
-        startTransition(() => updateGameListRecord(gameListRecord, mergedGameList));
-      };
-
-      handleSaveGameList();
+      if (mergedGameListHasChanges) {
+        handleSaveGameList(mergedGameList);
+      } else {
+        enqueueSnackbar('Načtení her dokončeno (žádné nové změny), nyní můžete opustit stránku', {
+          variant: 'info',
+          persist: true,
+        });
+      }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [newGameList]);
+  }, [gameListRecord.gameList, handleSaveGameList, newGameList, processingGameList]);
 
   return (
     <>
@@ -58,30 +86,51 @@ export const BggLoader = ({ gameListRecord }: Props) => {
           BGG loader
         </Typography>
 
-        <UnfinishedOverview gameList={gameList} />
+        <UnfinishedOverview gameList={processingGameList} />
 
         <Alert severity="warning" sx={{ mb: 4 }}>
           <AlertTitle>Po spuštění loaderu nezavírejte stránku!</AlertTitle>
           Všechny hry se uloží až po skončení loaderu. Nezavírejte stránku, dokud loader neskončí!
         </Alert>
 
-        <Box sx={{ display: 'inline-block', position: 'relative' }}>
-          <Button variant="contained" color="info" onClick={handleLoad} disabled={isLoading} startIcon={<Sync />}>
-            Načíst {gameList.length} her (cca {estimatedMinutes} min)
+        {!isLoading ? (
+          <Button
+            variant="contained"
+            color="info"
+            onClick={handleLoad}
+            disabled={isLoading || !processingGameList.length}
+            startIcon={<Sync />}
+          >
+            Načíst {processingGameList.length} her (cca {estimatedMinutes} min)
           </Button>
-          {isLoading && (
-            <LinearProgress
-              value={(processingCount / gameList.length) * 100}
-              variant="determinate"
-              color="success"
-              sx={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-            />
-          )}
-        </Box>
-        {isLoading && (
-          <Typography color="text.secondary" sx={{ display: 'inline-block', ml: 2 }}>
-            {processingCount} / {gameList.length}
-          </Typography>
+        ) : (
+          <Stack direction="row" alignItems="center" gap={3} width="50%">
+            <Box position="relative" height="100%" flexGrow={1}>
+              <LinearProgress
+                value={(processingCount / processingGameList.length) * 100}
+                variant="determinate"
+                color="success"
+                sx={{ width: '100%', height: 56 }}
+              />
+              <LinearProgress
+                variant="indeterminate"
+                color="success"
+                sx={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  opacity: 0.2,
+                }}
+              />
+            </Box>
+            {isLoading && (
+              <Typography variant="h4" color="text.secondary" noWrap flexShrink={0}>
+                {processingCount} / {processingGameList.length}
+              </Typography>
+            )}
+          </Stack>
         )}
       </Box>
 

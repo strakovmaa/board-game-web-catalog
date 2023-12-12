@@ -12,6 +12,7 @@ import { CsvColumns, CsvGame } from '@/data';
 import { CsvPreview } from './components/csv-preview';
 import { useRouter } from 'next/navigation';
 import { Urls } from '@/config';
+import { enqueueSnackbar } from 'notistack';
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -32,20 +33,28 @@ export const CsvLoader = () => {
   const [csvGameList, setCsvGameList] = useState<Game[]>([]);
 
   const handleFileUpload: ChangeEventHandler<HTMLInputElement> = async (event) => {
-    const file = event?.target?.files?.[0];
+    const input = event?.target;
+    const file = input?.files?.[0];
 
-    if (!file) return;
+    if (!input || !file) return;
 
     const data = await file.text();
     const csv = parse<CsvGame>(data, { header: true }).data;
     const newCsvGameList = mergeNotesToCsvGame(csv).map(getGameFromCsv);
 
+    if (!newCsvGameList.length) {
+      enqueueSnackbar('Soubor nelze nahrát, pravděpodobně je ve špatném formátu', {
+        variant: 'error',
+      });
+    }
+
     setCsvGameList(newCsvGameList);
+    input.value = '';
   };
 
   const handleCreateGameList = async () => {
     startTransition(async () => {
-      const { recordId } = await createGameListRecord(csvGameList, recordName);
+      const { recordId } = await createGameListRecord(csvGameList, recordName || 'Seznam her');
       push(`${Urls.ADMIN}/${recordId}`);
     });
   };

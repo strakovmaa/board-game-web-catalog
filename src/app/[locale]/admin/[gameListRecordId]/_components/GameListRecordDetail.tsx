@@ -70,7 +70,7 @@ export const GameListRecordDetail = ({ activeGameListRecord, gameListRecord }: P
     <>
       <Link href={Urls.ADMIN} display="inline-flex">
         <Stack direction="row" alignItems="center" mt={3}>
-          <ChevronLeft fontSize="small" /> zpět na Seznam her
+          <ChevronLeft fontSize="small" /> zpět na Seznamy her
         </Stack>
       </Link>
       <Typography variant="h2" gutterBottom mt={2}>

@@ -16,11 +16,12 @@ import {
 } from '@mui/material';
 import { useState, useTransition } from 'react';
 import dynamic from 'next/dynamic';
-import { Delete, Done, QueryBuilder, Settings } from '@mui/icons-material';
+import { Add, Delete, Done, Lock, QueryBuilder, Settings } from '@mui/icons-material';
 import { UserAuthRecord, UserAuthStatus, useUserAuth } from '../../../../_components/userAuth';
 import { authorizeUserAuthRecord, deleteUserAuthRecord } from '@/actions/userAuth';
 import { ButtonAction } from '@/components';
 import { IS_DEVELOPMENT } from '../../../../_components/config';
+import { AddNewUser } from '../add-new-user';
 
 const ReactJson = dynamic(() => import('react-json-view'), {
   ssr: false,
@@ -33,11 +34,16 @@ type Props = {
 export const UserAuthRecords = ({ userAuthRecords }: Props) => {
   const [isPending, startTransition] = useTransition();
   const [showDbScan, setShowDbScan] = useState(false);
+  const [showAddNewUser, setShowAddNewUser] = useState(false);
 
   const { userAuthRecord } = useUserAuth(userAuthRecords);
 
   const handleShowDbScan = () => {
     setShowDbScan((prev) => !prev);
+  };
+
+  const handleShowAddNewUser = () => {
+    setShowAddNewUser((prev) => !prev);
   };
 
   const handleAuthorize = async (record: UserAuthRecord) => {
@@ -54,6 +60,8 @@ export const UserAuthRecords = ({ userAuthRecords }: Props) => {
   const getStatusText = (status: `${UserAuthStatus}`) =>
     status === UserAuthStatus.Waiting ? 'Čeká na udělení přístupu' : 'Přístup udělen';
 
+  const getPassword = (password: string) => (IS_DEVELOPMENT ? password : <Lock fontSize="inherit" />);
+
   return (
     <>
       <Typography variant="h2" gutterBottom mt={4}>
@@ -69,6 +77,7 @@ export const UserAuthRecords = ({ userAuthRecords }: Props) => {
           <TableHead>
             <TableRow>
               <TableCell>Jméno</TableCell>
+              <TableCell>Heslo</TableCell>
               <TableCell>E-mail</TableCell>
               <TableCell>Stav</TableCell>
               <TableCell></TableCell>
@@ -86,6 +95,9 @@ export const UserAuthRecords = ({ userAuthRecords }: Props) => {
               >
                 <TableCell component="td" scope="row">
                   {record.user.name}
+                </TableCell>
+                <TableCell component="td" scope="row">
+                  {record.password && getPassword(record.password)}
                 </TableCell>
                 <TableCell component="td" scope="row">
                   {record.user.email}
@@ -126,6 +138,9 @@ export const UserAuthRecords = ({ userAuthRecords }: Props) => {
 
       {IS_DEVELOPMENT && (
         <Stack direction="row" gap={2} alignItems="center" my={4}>
+          <Button variant="contained" color="success" onClick={handleShowAddNewUser} startIcon={<Add />}>
+            Přidat nového uživatele
+          </Button>
           <Button variant="outlined" color="primary" onClick={handleShowDbScan} startIcon={<Settings />}>
             Zobrazit DbScan
           </Button>
@@ -133,6 +148,7 @@ export const UserAuthRecords = ({ userAuthRecords }: Props) => {
       )}
 
       {showDbScan && <ReactJson src={userAuthRecords} theme="pop" />}
+      {showAddNewUser && <AddNewUser onClose={() => setShowAddNewUser(false)} />}
     </>
   );
 };

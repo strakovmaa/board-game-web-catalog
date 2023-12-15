@@ -96,7 +96,7 @@ export const BggLoader = ({ gameListRecord }: Props) => {
         {!isLoading ? (
           <Button
             variant="contained"
-            color="info"
+            color="primary"
             onClick={handleLoad}
             disabled={isLoading || !processingGameList.length}
             startIcon={<Sync />}

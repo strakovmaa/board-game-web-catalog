@@ -15,5 +15,4 @@ export type GameListRecord = {
 export enum CacheTags {
   ACTIVE_GAMELIST = 'activeGameList',
   GAMELIST_RECORDS = 'gameListRecords',
-  USER_AUTH_RECORDS = 'userAuthRecords',
 }

@@ -7,6 +7,4 @@ type Props = {
   userAuthRecords: UserAuthRecord[];
 };
 
-export default function Users({ userAuthRecords }: Props) {
-  return <UserAuthRecords userAuthRecords={userAuthRecords} />;
-}
+export const Users = ({ userAuthRecords }: Props) => <UserAuthRecords userAuthRecords={userAuthRecords} />;

@@ -1,18 +1,19 @@
 'use client';
 
-import { Box, Button, Stack, TextField, Typography, styled } from '@mui/material';
-import { getGameFromCsv, mergeNotesToCsvGame } from './utils';
+import { Box, Button, Divider, Stack, TextField, Typography, styled } from '@mui/material';
+import { processCsvGameList } from './utils';
 import { ChangeEvent, ChangeEventHandler, useState, useTransition } from 'react';
 import { ButtonAction } from '@/components';
 import { createGameListRecord } from '@/actions';
 import { Upload } from '@mui/icons-material';
 import { Game } from '@/types';
 import { parse } from 'papaparse';
-import { CsvColumns, CsvGame } from '@/data';
 import { CsvPreview } from './components/csv-preview';
 import { useRouter } from 'next/navigation';
 import { Urls } from '@/config';
 import { enqueueSnackbar } from 'notistack';
+import { CsvHelp } from './components';
+import { CsvGame } from './types';
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -40,7 +41,7 @@ export const CsvLoader = () => {
 
     const data = await file.text();
     const csv = parse<CsvGame>(data, { header: true }).data;
-    const newCsvGameList = mergeNotesToCsvGame(csv).map(getGameFromCsv);
+    const newCsvGameList = processCsvGameList(csv);
 
     if (!newCsvGameList.length) {
       enqueueSnackbar('Soubor nelze nahrát, pravděpodobně je ve špatném formátu', {
@@ -65,26 +66,18 @@ export const CsvLoader = () => {
         Vytvořit nový seznam
       </Typography>
 
-      <Typography variant="h3">Názvy zpracovávaných sloupců</Typography>
-
-      <Box sx={{ my: 3 }}>
-        {Object.values(CsvColumns).map((column) => (
-          <div key={column}>{column}</div>
-        ))}
-      </Box>
+      <CsvHelp />
 
       <Typography variant="h3">Nahrát CSV soubor</Typography>
 
-      <Button component="label" variant="contained" startIcon={<Upload />} sx={{ my: 3 }}>
+      <Button component="label" variant="contained" startIcon={<Upload />} sx={{ mt: 3, mb: 5 }}>
         Nahrát
         <VisuallyHiddenInput type="file" onChange={handleFileUpload} />
       </Button>
 
       {!!csvGameList.length && (
         <>
-          <Typography variant="body1" color="text.secondary">
-            Seznam her z CSV obsahuje {csvGameList?.length || 0} položek.
-          </Typography>
+          <Divider sx={{ mb: 3 }} />
 
           <CsvPreview gameList={csvGameList} />
 

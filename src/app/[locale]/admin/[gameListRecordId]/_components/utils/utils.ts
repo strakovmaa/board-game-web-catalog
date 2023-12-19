@@ -13,13 +13,13 @@ export const processGameList = async (
   const newGameList: Game[] = [];
 
   for (const game of gameList) {
-    const { sourceName, status } = game;
+    const { sourceName, status, id } = game;
 
     try {
       if (status === Status.FINISHED) {
         setLog((prev) => [...prev, { sourceName, status: LogRecordState.SKIPPED }]);
       } else {
-        const bggId = await getBggId(sourceName);
+        const bggId = id ?? (await getBggId(sourceName));
         const bggThing = await fetchThingData(bggId);
 
         const parsedGame = getGameFromBggThing(game, bggThing);

@@ -1,3 +1,5 @@
+import { CsvColumnsOptions } from './types';
+
 export const LEFT_MENU_WIDTH = 224;
 export const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
 
@@ -14,3 +16,28 @@ export const DISABLE_USER_AUTH_ON_DEVELOPMENT = true;
  * You can disable it on production for security reasons
  */
 export const DISABLE_CREDENTIALS_ON_PRODUCTION = true;
+
+/**
+ * Column options for parsing CSV
+ * @param enabled if true, column will be parsed
+ * @param colName title of the column in CSV header line
+ * @param typeGame text defining that the row is of type `game` (and not `note`)
+ */
+export const CSV_COLUMNS_OPTIONS: CsvColumnsOptions = {
+  type: {
+    enabled: true,
+    colName: 'Hra / Poznámka',
+    typeGame: 'GAME',
+  },
+  name: {
+    colName: 'Název hry',
+  },
+  id: {
+    enabled: true,
+    colName: 'BGG ID',
+  },
+  langs: {
+    enabled: true,
+    colName: 'Jazyky',
+  },
+};

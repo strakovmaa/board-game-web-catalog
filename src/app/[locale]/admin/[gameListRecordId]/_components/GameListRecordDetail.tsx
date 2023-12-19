@@ -8,6 +8,7 @@ import {
   Delete,
   Download,
   KeyboardDoubleArrowRight,
+  Settings,
   Visibility,
   VisibilityOff,
 } from '@mui/icons-material';
@@ -18,6 +19,12 @@ import { BggLoader } from './components';
 import { useRouter } from 'next/navigation';
 import { Urls } from '@/config';
 import { theme } from '@/theme/theme';
+import { IS_DEVELOPMENT } from '../../_components/config';
+import dynamic from 'next/dynamic';
+
+const ReactJson = dynamic(() => import('react-json-view'), {
+  ssr: false,
+});
 
 type Props = {
   activeGameListRecord?: number;
@@ -27,8 +34,10 @@ type Props = {
 export const GameListRecordDetail = ({ activeGameListRecord, gameListRecord }: Props) => {
   const [isPending, startTransition] = useTransition();
   const { push } = useRouter();
+
   const [showGameList, setShowGameList] = useState(false);
   const [showBggLoader, setShowBggLoader] = useState(false);
+  const [showDbScan, setShowDbScan] = useState(false);
 
   const gameList = gameListRecord.gameList;
 
@@ -65,6 +74,7 @@ export const GameListRecordDetail = ({ activeGameListRecord, gameListRecord }: P
 
   const handleShowGameList = () => setShowGameList((prev) => !prev);
   const handleShowBggLoader = () => setShowBggLoader((prev) => !prev);
+  const handleShowDbScan = () => setShowDbScan((prev) => !prev);
 
   return (
     <>
@@ -151,6 +161,11 @@ export const GameListRecordDetail = ({ activeGameListRecord, gameListRecord }: P
         >
           Zobrazit náhled seznamu her
         </Button>
+        {IS_DEVELOPMENT && (
+          <Button variant="outlined" color="primary" onClick={handleShowDbScan} startIcon={<Settings />}>
+            Zobrazit DbScan
+          </Button>
+        )}
       </Stack>
 
       <Divider sx={{ mb: 3 }} />
@@ -160,6 +175,8 @@ export const GameListRecordDetail = ({ activeGameListRecord, gameListRecord }: P
       <ThemeProvider theme={theme}>
         {showGameList && <GameList gameList={gameList} gameTotalCount={gameList.length} />}
       </ThemeProvider>
+
+      {showDbScan && <ReactJson src={gameListRecord} theme="pop" />}
     </>
   );
 };

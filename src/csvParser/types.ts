@@ -1,3 +1,5 @@
+export type CsvGame = Record<string, any>;
+
 export type CsvColumnOption<AllowEnabled extends boolean = true> = AllowEnabled extends true
   ? {
       enabled: boolean;

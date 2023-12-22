@@ -11,7 +11,7 @@ import {
   alpha,
 } from '@mui/material';
 import { CSV_COLUMNS_HELPS } from './config';
-import { CsvColumnOption, CsvColumnsOptions } from '@/app/[locale]/admin/_components/types';
+import { CsvColumnOption, CsvColumnsOptions } from '@/csvParser';
 import { pickBy } from 'lodash-es';
 
 export const CsvHelp = () => {

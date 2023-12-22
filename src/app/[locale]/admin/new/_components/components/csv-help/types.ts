@@ -1,4 +1,4 @@
-import { CsvColumnsOptions } from '@/app/[locale]/admin/_components/types';
+import { CsvColumnsOptions } from '@/csvParser';
 import { ReactNode } from 'react';
 
 export type CsvColumnsHelp = {

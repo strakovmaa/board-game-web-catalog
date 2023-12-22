@@ -1,4 +1,4 @@
-import { CsvColumnsOptions } from '@/app/[locale]/admin/_components/types';
+import { CsvColumnsOptions } from '@/csvParser';
 import { Game } from '@/types';
 import { Typography } from '@mui/material';
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { Box, Button, Divider, Stack, TextField, Typography, styled } from '@mui/material';
-import { processCsvGameList } from './utils';
+import { CsvGame, getGameListFromCsv } from '@/csvParser';
 import { ChangeEvent, ChangeEventHandler, useState, useTransition } from 'react';
 import { ButtonAction } from '@/components';
 import { createGameListRecord } from '@/actions';
@@ -13,7 +13,7 @@ import { useRouter } from 'next/navigation';
 import { Urls } from '@/config';
 import { enqueueSnackbar } from 'notistack';
 import { CsvHelp } from './components';
-import { CsvGame } from './types';
+import { CSV_COLUMNS_OPTIONS } from '../../_components/config';
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -31,7 +31,7 @@ export const CsvLoader = () => {
   const [isPending, startTransition] = useTransition();
   const { push } = useRouter();
   const [recordName, setRecordName] = useState('');
-  const [csvGameList, setCsvGameList] = useState<Game[]>([]);
+  const [gameList, setGameList] = useState<Game[]>([]);
 
   const handleFileUpload: ChangeEventHandler<HTMLInputElement> = async (event) => {
     const input = event?.target;
@@ -40,22 +40,22 @@ export const CsvLoader = () => {
     if (!input || !file) return;
 
     const data = await file.text();
-    const csv = parse<CsvGame>(data, { header: true }).data;
-    const newCsvGameList = processCsvGameList(csv);
+    const csvGameList = parse<CsvGame>(data, { header: true }).data;
+    const newGameList = getGameListFromCsv(csvGameList, CSV_COLUMNS_OPTIONS);
 
-    if (!newCsvGameList.length) {
+    if (!newGameList.length) {
       enqueueSnackbar('Soubor nelze nahrát, pravděpodobně je ve špatném formátu', {
         variant: 'error',
       });
     }
 
-    setCsvGameList(newCsvGameList);
+    setGameList(newGameList);
     input.value = '';
   };
 
   const handleCreateGameList = async () => {
     startTransition(async () => {
-      const { recordId } = await createGameListRecord(csvGameList, recordName || 'Seznam her');
+      const { recordId } = await createGameListRecord(gameList, recordName || 'Seznam her');
       push(`${Urls.ADMIN}/${recordId}`);
     });
   };
@@ -75,11 +75,11 @@ export const CsvLoader = () => {
         <VisuallyHiddenInput type="file" onChange={handleFileUpload} />
       </Button>
 
-      {!!csvGameList.length && (
+      {!!gameList.length && (
         <>
           <Divider sx={{ mb: 3 }} />
 
-          <CsvPreview gameList={csvGameList} />
+          <CsvPreview gameList={gameList} />
 
           <Typography variant="h3" gutterBottom>
             Název seznamu

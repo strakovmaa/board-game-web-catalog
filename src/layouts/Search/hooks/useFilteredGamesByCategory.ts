@@ -4,6 +4,7 @@ import { CategoryFilters, CategoryGroup, MechanicGroup } from '../types';
 import {
   getAutocompleteOptions,
   getCategoryGroup,
+  getLangOptions,
   getMechanicGroup,
   getOrderingOptions,
   getPlayersCountOptions,
@@ -26,6 +27,7 @@ type Return = {
   playingTimeOptions: ControlledSelectOption<CategoryFilters, 'playingTime'>[];
   categoryOptions: ControlleAutocompleteOption[];
   mechanicsOptions: ControlleAutocompleteOption[];
+  langOptions: ControlledSelectOption<CategoryFilters, 'lang'>[];
   orderingOptions: ControlledSelectOption<CategoryFilters, 'ordering'>[];
 };
 
@@ -75,6 +77,7 @@ export const useFilteredGamesByCategory = ({ filters, gameList, locale }: Props)
     [gameList, locale, t],
   );
 
+  const langOptions = useMemo(() => getLangOptions(t), [t]);
   const orderingOptions = useMemo(() => getOrderingOptions(t), [t]);
 
   return {
@@ -83,6 +86,7 @@ export const useFilteredGamesByCategory = ({ filters, gameList, locale }: Props)
     playingTimeOptions,
     categoryOptions,
     mechanicsOptions,
+    langOptions,
     orderingOptions,
   };
 };

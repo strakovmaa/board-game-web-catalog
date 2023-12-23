@@ -13,9 +13,13 @@ type CsvColumnTypeOption = CsvColumnOption & {
   typeGame: string;
 };
 
+type CsvColumnLangsOption = CsvColumnOption & {
+  langIrrelevant: string;
+};
+
 export type CsvColumnsOptions = {
   type: CsvColumnTypeOption;
   name: CsvColumnOption<false>;
   id: CsvColumnOption;
-  langs: CsvColumnOption;
+  langs: CsvColumnLangsOption;
 };

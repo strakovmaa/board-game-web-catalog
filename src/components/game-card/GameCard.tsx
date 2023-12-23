@@ -6,6 +6,7 @@ import {
   CardImage,
   GameInfoItem,
   GameWeight,
+  LangItem,
   NoteTag,
   PlayersCountString,
   RankTag,
@@ -40,6 +41,7 @@ export const GameCard = ({
     ranks,
     notes,
     status,
+    langs,
   },
 }: Props) => {
   const t = useTranslations();
@@ -71,6 +73,19 @@ export const GameCard = ({
             </Stack>
           )}
           {!!averageWeight?.value && <GameWeight averageWeight={averageWeight} />}
+
+          {!!langs?.length && (
+            <Stack
+              direction="row"
+              alignItems="center"
+              gap={1}
+              sx={(theme) => ({ position: 'absolute', bottom: theme.spacing(-3), right: theme.spacing(-1.5) })}
+            >
+              {langs?.map((lang) => (
+                <LangItem key={lang} lang={lang} />
+              ))}
+            </Stack>
+          )}
         </Box>
 
         <Typography variant="h3" sx={{ mb: 0.25 }}>

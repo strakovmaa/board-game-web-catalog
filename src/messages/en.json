@@ -21,7 +21,13 @@
     "goToBgg": "Go to BoardGameGeek.com",
     "goToZh": "Search game on Zatrolene-hry.cz",
     "usersCount": "{usersCount} votes",
-    "noInfo": "No additional information"
+    "noInfo": "No additional information",
+    "langs": {
+      "irrelevant": "language independent",
+      "cz": "Czech",
+      "eng": "English",
+      "de": "German"
+    }
   },
   "rank": {
     "pageTitle": "Best games",
@@ -92,6 +98,15 @@
         "groups": {
           "favourites": "Favourites",
           "other": "Other"
+        }
+      },
+      "lang": {
+        "label": "Language",
+        "options": {
+          "all": "– all –",
+          "cz": "Czech",
+          "eng": "English",
+          "de": "German"
         }
       },
       "ordering": {

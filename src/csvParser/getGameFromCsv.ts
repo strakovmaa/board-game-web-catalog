@@ -1,6 +1,7 @@
 import { camelCase } from 'lodash-es';
 import { Game, Lang, Status } from '@/types';
 import { CsvColumnsOptions, CsvGame } from './types';
+import { VALID_LANGS } from './config';
 
 const getGameUid = (csvGame: CsvGame, langs: Lang[], options: CsvColumnsOptions): string =>
   camelCase(`${csvGame[options.name.colName]} ${langs.join(' ')} ${csvGame?.notes?.[0]?.substring(0, 15) ?? ''}`);
@@ -12,7 +13,8 @@ export const getGameFromCsv = (csvGame: CsvGame, options: CsvColumnsOptions): Ga
     ? ((csvGame[options.langs.colName] as string) ?? '')
         .split(',')
         .map((lang) => lang.trim())
-        .filter((lang): lang is Lang => Object.values(Lang).includes(lang as Lang))
+        .map((lang) => (lang === options.langs.langIrrelevant ? Lang.Irrelevant : lang))
+        .filter((lang): lang is Lang => VALID_LANGS.includes(lang as Lang))
     : [];
 
   return {

@@ -12,6 +12,8 @@ export type Rating = {
 };
 
 export enum Lang {
+  All = 'All',
+  Irrelevant = 'Irrelevant',
   CZ = 'CZ',
   ENG = 'ENG',
   DE = 'DE',

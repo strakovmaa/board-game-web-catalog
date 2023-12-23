@@ -19,6 +19,7 @@ const OPTIONS_ALL_ENABLED: CsvColumnsOptions = {
   langs: {
     enabled: true,
     colName: 'Jazyky',
+    langIrrelevant: 'nerozhoduje',
   },
 };
 
@@ -31,6 +32,7 @@ const OPTIONS_ALL_DISABLED: CsvColumnsOptions = {
   langs: {
     enabled: false,
     colName: 'Jazyky',
+    langIrrelevant: 'nerozhoduje',
   },
 };
 
@@ -50,6 +52,7 @@ const OPTIONS_WITH_TYPE_GAME_ALL_ENABLED: CsvColumnsOptions = {
   langs: {
     enabled: true,
     colName: 'Jazyky',
+    langIrrelevant: 'nerozhoduje',
   },
 };
 
@@ -62,6 +65,7 @@ const OPTIONS_WITH_TYPE_GAME_ALL_DISABLED: CsvColumnsOptions = {
   langs: {
     enabled: false,
     colName: 'Jazyky',
+    langIrrelevant: 'nerozhoduje',
   },
 };
 
@@ -93,9 +97,10 @@ describe('Parsing CsvGame[] data to Game[]', () => {
     expect(gameWithAll.sourceName).toEqual('Game with BGG ID and langs');
     expect(gameWithAll.notes).toBeUndefined;
     expect(gameWithAll.id).toEqual(54998);
-    expect(gameWithAll.langs?.length).toEqual(2);
+    expect(gameWithAll.langs?.length).toEqual(3);
     expect(gameWithAll.langs?.[0]).toEqual('CZ');
     expect(gameWithAll.langs?.[1]).toEqual('ENG');
+    expect(gameWithAll.langs?.[2]).toEqual('Irrelevant');
   });
 
   it('Config: TypeGame disabled, id disabled, langs disabled', () => {
@@ -165,9 +170,10 @@ describe('Parsing CsvGame[] data to Game[]', () => {
     expect(gameWithAll.notes?.length).toEqual(1);
     expect(gameWithAll.notes?.[0]).toEqual('Note');
     expect(gameWithAll.id).toEqual(54998);
-    expect(gameWithAll.langs?.length).toEqual(2);
+    expect(gameWithAll.langs?.length).toEqual(3);
     expect(gameWithAll.langs?.[0]).toEqual('CZ');
     expect(gameWithAll.langs?.[1]).toEqual('ENG');
+    expect(gameWithAll.langs?.[2]).toEqual('Irrelevant');
   });
 
   it('Config: TypeGame ENABLED, id disabled, langs disabled', () => {

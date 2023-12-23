@@ -4,7 +4,7 @@ import { CategoryFilters, CategoryGroup, MechanicGroup, PlayersCount } from '../
 import { GetAutocompleteOptionsProps } from './types';
 import { CategoryKey, MechanicKey } from '@/bggData';
 import { ControlledSelectOption, ControlleAutocompleteOption } from '@/components';
-import { GamePlayingTimeType, GameOrdering, TFunction } from '@/types';
+import { GamePlayingTimeType, GameOrdering, TFunction, Lang } from '@/types';
 
 export const getPlayersCountOptions = (t: TFunction): ControlledSelectOption<CategoryFilters, 'playersCount'>[] => {
   const values: PlayersCount[] = [0, 1, 200, 2, 3, 4, 5, 6, 7];
@@ -26,6 +26,14 @@ export const getCategoryGroup = (value: string): string =>
 
 export const getMechanicGroup = (value: string): string =>
   findKey(GROUPED_MECHANICS, (item) => item?.includes(value as MechanicKey)) || MechanicGroup.Other;
+
+export const getLangOptions = (t: TFunction): ControlledSelectOption<CategoryFilters, 'lang'>[] =>
+  Object.values(Lang)
+    .filter((value) => value !== Lang.Irrelevant)
+    .map((value) => ({
+      value,
+      label: t(`search.form.lang.options.${value.toLowerCase()}`),
+    }));
 
 export const getAutocompleteOptions = ({
   gameList,

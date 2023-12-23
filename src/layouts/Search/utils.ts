@@ -1,4 +1,4 @@
-import { Game } from '@/types';
+import { Game, Lang } from '@/types';
 import { CATEGORY_PLAYING_TIME_INTERVALS } from './config';
 import { CategoryFilters } from './types';
 import { CategoryKey, MechanicKey } from '@/bggData';
@@ -30,11 +30,20 @@ const hasCategories = (game: Game, { categories }: CategoryFilters): boolean =>
 const hasMechanics = (game: Game, { mechanics }: CategoryFilters): boolean =>
   mechanics.every((item) => game?.mechanics?.includes(item.value as MechanicKey));
 
+const hasLangs = (game: Game, { lang }: CategoryFilters): boolean => {
+  if (lang === Lang.All) return true;
+
+  if (game.langs?.includes(Lang.Irrelevant)) return true;
+
+  return !!game.langs?.includes(lang as Lang);
+};
+
 export const filterGamebyCategory = (game: Game, filters: CategoryFilters): boolean =>
   hasPlayersCount(game, filters) &&
   hasPlayingTime(game, filters) &&
   hasCategories(game, filters) &&
-  hasMechanics(game, filters);
+  hasMechanics(game, filters) &&
+  hasLangs(game, filters);
 
 export const orderGameByRating: (game: Game) => unknown = (game) => game.averageRating?.value || 0;
 

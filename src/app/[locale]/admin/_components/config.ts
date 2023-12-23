@@ -39,5 +39,6 @@ export const CSV_COLUMNS_OPTIONS: CsvColumnsOptions = {
   langs: {
     enabled: true,
     colName: 'Jazyky',
+    langIrrelevant: 'nerozhoduje',
   },
 };

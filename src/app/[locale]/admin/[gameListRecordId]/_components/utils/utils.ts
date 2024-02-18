@@ -3,7 +3,7 @@ import { fetchThingData } from './fetchUtils';
 import { getBggId } from './processSearch';
 import { Dispatch, SetStateAction } from 'react';
 import { Game, LogRecord, Status, LogRecordState } from '@/types';
-import { PROCESS_GAME_TIMEOUT, TOO_MANY_REQUESTS_CODE } from '../config';
+import { PROCESS_GAME_TIMEOUT, TOO_MANY_REQUESTS_TEXT } from '../config';
 
 export const processGameList = async (
   gameList: Game[],
@@ -38,7 +38,7 @@ export const processGameList = async (
         newGameList.push({ ...game, status: Status.UNFINISHED, statusMessage: `${error}` });
         setLog((prev) => [...prev, { sourceName, status: LogRecordState.ERROR, statusMessage: `${error}` }]);
 
-        if (error?.cause === TOO_MANY_REQUESTS_CODE) break;
+        if (error.message.includes(TOO_MANY_REQUESTS_TEXT)) break;
       }
     }
   }

@@ -1,7 +1,7 @@
 'use client';
 
 import { Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar } from '@mui/material';
-import { Add, People, Settings, ViewList } from '@mui/icons-material';
+import { Add, OpenInNewOutlined, People, Settings, ViewList } from '@mui/icons-material';
 import { Link } from '@/components';
 import { Urls } from '@/config';
 import { LEFT_MENU_WIDTH } from './config';
@@ -59,6 +59,17 @@ export default function LeftMenu() {
               <Settings />
             </ListItemIcon>
             <ListItemText primary="Nastavení" />
+          </ListItemButton>
+        </ListItem>
+
+        <Divider />
+
+        <ListItem disablePadding>
+          <ListItemButton LinkComponent={Link} href={Urls.SEARCH} target="_blank">
+            <ListItemIcon sx={{ minWidth: 44 }}>
+              <OpenInNewOutlined />
+            </ListItemIcon>
+            <ListItemText primary="Katalog" />
           </ListItemButton>
         </ListItem>
       </List>

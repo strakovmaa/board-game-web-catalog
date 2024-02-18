@@ -1,4 +1,4 @@
-# Mystica Brno Games
+# Board Game Web Catalog
 
 If you run some public place (e.g restaurant, community center) with board game collection, you can use this app for automatic management and presentation of your games.
 
@@ -9,8 +9,7 @@ If you run some public place (e.g restaurant, community center) with board game 
 3. Publish your collection so clients/visitors could see it
 4. There is also advanced search and filtering by different parameters
 
-You can see collection of board game pub [Mystica Brno](https://mystica-brno-games-nextjs.vercel.app/) (hosted by Vercel).
-There is also [Administration](https://mystica-brno-games-nextjs.vercel.app/admin) (for logged users).
+Demo is available [here](https://board-game-web-catalog.vercel.app/) (hosted by Vercel).
 
 ## Built With
 
@@ -22,7 +21,7 @@ There is also [Administration](https://mystica-brno-games-nextjs.vercel.app/admi
 Install packages
 
 ```
-npm install
+npm install --f
 ```
 
 Run local server (localhost:3000 will open up in your default browser)

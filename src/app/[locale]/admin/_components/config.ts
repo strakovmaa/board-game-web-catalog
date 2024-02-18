@@ -4,6 +4,11 @@ export const LEFT_MENU_WIDTH = 224;
 export const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
 
 /**
+ * If you run multiple projects on one Vercel account, you can separate the databases by this prefix
+ */
+export const DB_PREFIX = 'DEMO_';
+
+/**
  * On development environment, Admin is fully accessible regardless on authentication
  * Set this to `true` if you want to test real views of Admin (e.g. different states for different users)
  * On production environment, Admin always require authentication (it is not affected by this value)

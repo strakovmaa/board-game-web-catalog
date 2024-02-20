@@ -34,11 +34,7 @@ export const AppMenu = () => {
 
             <Divider sx={{ my: 1 }} />
 
-            <MenuLink to={Urls.FAQ} i18nKey="faq.pageTitle" />
-
-            <Divider sx={{ my: 1 }} />
-
-            <MenuLink to={Urls.EXTERNAL_MYSTICA} i18nKey="footer.goToMystica" external />
+            <MenuLink to={Urls.EXTERNAL_CLIENT} i18nKey="footer.goToClient" external />
           </List>
         </Box>
       </Drawer>

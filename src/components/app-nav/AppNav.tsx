@@ -13,7 +13,7 @@ export const AppNav = () => {
         <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
           <Link href={Urls.SEARCH} color="secondary" underline="none" flexGrow={1}>
             <Stack direction="row" alignItems="center" gap={1} ml={-1} mr={1}>
-              <img width={40} height={40} src="/Mystica_Facebook_400x400_150dpi-300x300.png" />
+              <img width={40} height={40} src="/Logo.png" />
               <Typography sx={{ pt: 0.5 }}>{t('meta.title')}</Typography>
             </Stack>
           </Link>

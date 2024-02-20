@@ -7,12 +7,10 @@ export function generateStaticParams() {
 }
 
 export const metadata = {
-  title: 'Katalog her | Mystica Brno',
-  icon: '/Mystica_Facebook_400x400_150dpi-300x300.png',
-  apple: [
-    { url: '/Mystica_Facebook_400x400_150dpi-150x150.png', sizes: '32x32', type: 'image/png' },
-    { url: '/Mystica_Facebook_400x400_150dpi-300x300.png', sizes: '192x192', type: 'image/png' },
-  ],
+  title: 'Webový katalog deskových her',
+  icons: {
+    icon: '/Logo.png',
+  },
 };
 
 type Props = {

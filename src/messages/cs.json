@@ -5,7 +5,7 @@
     "showLess": "Skrýt"
   },
   "meta": {
-    "title": "Mystica Brno"
+    "title": "Webový katalog deskových her"
   },
   "gameCard": {
     "playingtime": "{playingtime} min",
@@ -359,46 +359,10 @@
       "zoneOfControl": "Zone of Control"
     }
   },
-  "faq": {
-    "pageTitle": "Často kladené otázky",
-    "content": [
-      {
-        "q": "Tyhle stránky spravuje Mystica?",
-        "a": "Ne, toto je pouze fanouškovský projekt. S Mysticou spolupracujeme na přesnějším a kompletním seznamu her."
-      },
-      {
-        "q": "K čemu to je, když má Mystica na webu seznam her?",
-        "a": "Seznam her je užitečný, pokud víte, co chcete hrát. Pokud chcete zkusit novou hru pro 5 hráčů s herní dobou do 60 minut, nezbývá vám než ručně vyhledávat hry podle názvu, dokud nenajdete, co hledáte. Toto vyhledávání jsme už udělali za vás, takže najít hru podle vašich potřeb je nyní otázkou chvilky."
-      },
-      {
-        "q": "Je seznam her aktuální?",
-        "a": "Je stejně aktuální jako seznam her na webu Mysticy."
-      },
-      {
-        "q": "Jsou informace u hry správně?",
-        "a": "Všechny informace o hře včetně obrázku se automaticky stahují z BoardGameGeek.com, a to pouze na základě jména hry. Je proto možné, že je zde zobrazena jiná edice hry, jiná jazyková verze, nebo dokonce úplně jiná hra. V případě pochybností kontaktujte obsluhu Mysticy a doptejte se na konkrétní hru. Na přesném a kompletním katalogu her pracujeme s Mysticou."
-      },
-      {
-        "q": "Dá se nějak zjistit, jestli je hra v češtině/angličtině?",
-        "a": "Zatím ne. Zkuste najít hru na webu Mysticy, u některých her bývá uvedeno CZ/ENG."
-      },
-      {
-        "q": "Můžu si tady hru rovnou rezervovat?",
-        "a": "Ne, toto je pouze katalog a kromě zobrazování her nic neumí."
-      },
-      {
-        "q": "Co znamená (libovolný deskoherní termín)?",
-        "a": "Nevíme. Pravděpodobně to vymysleli na BoardGameGeek.com."
-      },
-      {
-        "q": "Jak vás můžu podpořit?",
-        "a": "Řekněte o nás svým spoluhráčům. V žádném případě nám neposílejte peníze, máme jich tolik, že už se nám ani nikam nevejdou."
-      }
-    ]
-  },
   "footer": {
-    "goToMystica": "Oficiální seznam her",
+    "goToClient": "Oficiální seznam her",
     "gamesCount": "Katalog obsahuje {gamesCount} her.",
-    "recordCreated": "Poslední aktualizace {recordCreated}."
+    "recordCreated": "Poslední aktualizace {recordCreated}.",
+    "createdBy": "Vytvořil"
   }
 }

@@ -3,6 +3,7 @@ import { FooterLink } from './components';
 import { useTranslations } from 'next-intl';
 import { Urls } from '@/config';
 import { GameListInfo } from '@/types';
+import { Link } from '../Link';
 
 type Props = {
   gameListInfo?: GameListInfo;
@@ -28,13 +29,12 @@ export const AppFooter = ({ gameListInfo }: Props) => {
               <Stack alignItems="flex-start" gap={1}>
                 <FooterLink to={Urls.SEARCH} i18nKey="search.pageTitle" />
                 <FooterLink to={Urls.NAME} i18nKey="name.pageTitle" />
-                <FooterLink to={Urls.RANK} i18nKey="rank.pageTitle" />
               </Stack>
             </Grid>
             <Grid item lg={6}>
               <Stack alignItems="flex-start" gap={1}>
-                <FooterLink to={Urls.FAQ} i18nKey="faq.pageTitle" />
-                <FooterLink to={Urls.EXTERNAL_MYSTICA} i18nKey="footer.goToMystica" external />
+                <FooterLink to={Urls.RANK} i18nKey="rank.pageTitle" />
+                <FooterLink to={Urls.EXTERNAL_CLIENT} i18nKey="footer.goToClient" external />
               </Stack>
             </Grid>
           </Grid>
@@ -51,8 +51,7 @@ export const AppFooter = ({ gameListInfo }: Props) => {
             <FooterLink to={Urls.SEARCH} i18nKey="search.pageTitle" />
             <FooterLink to={Urls.NAME} i18nKey="name.pageTitle" />
             <FooterLink to={Urls.RANK} i18nKey="rank.pageTitle" />
-            <FooterLink to={Urls.FAQ} i18nKey="faq.pageTitle" />
-            <FooterLink to={Urls.EXTERNAL_MYSTICA} i18nKey="footer.goToMystica" external />
+            <FooterLink to={Urls.EXTERNAL_CLIENT} i18nKey="footer.goToClient" external />
           </Stack>
         </Stack>
       </Container>
@@ -68,7 +67,13 @@ export const AppFooter = ({ gameListInfo }: Props) => {
           <Typography variant="body2" color="secondary.dark" textAlign="center" my={2}>
             {gamesCount && t('footer.gamesCount', { gamesCount })}
             {recordCreated &&
-              ' ' + t('footer.recordCreated', { recordCreated: new Date(recordCreated ?? 0).toLocaleDateString() })}
+              ' ' +
+                t('footer.recordCreated', { recordCreated: new Date(recordCreated ?? 0).toLocaleDateString() })}{' '}
+            {t('footer.createdBy')}{' '}
+            <Link color="secondary.dark" href="https://github.com/BobesCZ" target="_blank">
+              Bobeš
+            </Link>
+            .
           </Typography>
         </>
       )}

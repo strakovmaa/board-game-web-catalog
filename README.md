@@ -32,7 +32,7 @@ npm run dev
 
 ## Guidelines
 
-See [GUIDELINES](https://github.com/BobesCZ/mystica-brno-games-nextjs/blob/main/GUIDELINES.md) for starting new project
+See [GUIDELINES](/GUIDELINES.md) for starting new project
 
 ## Places using this project
 

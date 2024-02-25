@@ -1,9 +1,9 @@
 'use client';
 
-import { Box, Button, Divider, Stack, TextField, Typography, styled } from '@mui/material';
+import { Box, Button, Divider, Stack, TextField, Typography } from '@mui/material';
 import { CsvGame, getGameListFromCsv } from '@/csvParser';
 import { ChangeEvent, ChangeEventHandler, useState, useTransition } from 'react';
-import { ButtonAction } from '@/components';
+import { ButtonAction, VisuallyHiddenInput, processFileUpload } from '@/components';
 import { createGameListRecord } from '@/actions';
 import { Upload } from '@mui/icons-material';
 import { Game } from '@/types';
@@ -15,18 +15,6 @@ import { enqueueSnackbar } from 'notistack';
 import { CsvHelp } from './components';
 import { CSV_COLUMNS_OPTIONS } from '../../_components/config';
 
-const VisuallyHiddenInput = styled('input')({
-  clip: 'rect(0 0 0 0)',
-  clipPath: 'inset(50%)',
-  height: 1,
-  overflow: 'hidden',
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
-  whiteSpace: 'nowrap',
-  width: 1,
-});
-
 export const CsvLoader = () => {
   const [isPending, startTransition] = useTransition();
   const { push } = useRouter();
@@ -34,12 +22,7 @@ export const CsvLoader = () => {
   const [gameList, setGameList] = useState<Game[]>([]);
 
   const handleFileUpload: ChangeEventHandler<HTMLInputElement> = async (event) => {
-    const input = event?.target;
-    const file = input?.files?.[0];
-
-    if (!input || !file) return;
-
-    const data = await file.text();
+    const data = await processFileUpload(event);
     const csvGameList = parse<CsvGame>(data, { header: true }).data;
     const newGameList = getGameListFromCsv(csvGameList, CSV_COLUMNS_OPTIONS);
 
@@ -50,7 +33,6 @@ export const CsvLoader = () => {
     }
 
     setGameList(newGameList);
-    input.value = '';
   };
 
   const handleCreateGameList = async () => {

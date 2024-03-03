@@ -57,7 +57,7 @@
     }
   },
   "pagination": {
-    "showMore": "Load more {itemsCount}"
+    "showMore": "Load more {itemsCount} {itemsCount, plural, one {game} other {games}}"
   },
   "search": {
     "pageTitle": "Find game by parameters",

@@ -1,4 +1,4 @@
-import { Box, Container, Divider, Grid, Stack, Typography, darken } from '@mui/material';
+import { Box, Container, Divider, Grid, Stack, Typography } from '@mui/material';
 import { FooterLink } from './components';
 import { useTranslations } from 'next-intl';
 import { Urls } from '@/config';
@@ -15,11 +15,11 @@ export const AppFooter = ({ gameListInfo }: Props) => {
   const recordCreated = gameListInfo?.recordCreated;
 
   return (
-    <Box sx={{ backgroundColor: '#292112' }}>
+    <Box sx={(theme) => ({ backgroundColor: theme.palette.secondary.dark })}>
       <Container maxWidth="md" sx={{ py: 5 }}>
         <Box sx={{ display: { xs: 'none', lg: 'block' } }}>
           <Box mb={2.5}>
-            <Typography variant="h3" color="secondary.dark">
+            <Typography variant="h3" color="secondary.main">
               {t('meta.title')}
             </Typography>
           </Box>
@@ -43,7 +43,7 @@ export const AppFooter = ({ gameListInfo }: Props) => {
         <Stack alignItems="center" sx={{ display: { lg: 'none' } }}>
           <Stack alignItems="flex-start" gap={1.5}>
             <Box mb={1}>
-              <Typography variant="h3" color="secondary.dark">
+              <Typography variant="h3" color="secondary.main">
                 {t('meta.title')}
               </Typography>
             </Box>
@@ -58,19 +58,15 @@ export const AppFooter = ({ gameListInfo }: Props) => {
 
       {(gamesCount || recordCreated) && (
         <>
-          <Divider
-            sx={({ palette }) => ({
-              '&.MuiDivider-root': { borderColor: darken(palette.primary.contrastText, 0.5) },
-            })}
-          />
+          <Divider />
 
-          <Typography variant="body2" color="secondary.dark" textAlign="center" my={2}>
+          <Typography variant="body2" color="secondary.main" textAlign="center" my={2}>
             {gamesCount && t('footer.gamesCount', { gamesCount })}
             {recordCreated &&
               ' ' +
                 t('footer.recordCreated', { recordCreated: new Date(recordCreated ?? 0).toLocaleDateString() })}{' '}
             {t('footer.createdBy')}{' '}
-            <Link color="secondary.dark" href="https://github.com/BobesCZ" target="_blank">
+            <Link color="secondary.main" href="https://github.com/BobesCZ" target="_blank">
               Bobeš
             </Link>
             .

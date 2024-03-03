@@ -15,7 +15,7 @@ export const RankForm = ({ rankNameOptions }: Props) => {
   const { control } = useFormContext<RankFilters>();
 
   return (
-    <Box pt={4} pb={4} sx={(theme) => ({ backgroundColor: theme.palette.secondary.main })}>
+    <Box pt={4} pb={4} sx={(theme) => ({ backgroundColor: theme.palette.secondary.light })}>
       <Container>
         <Grid container rowSpacing={3} columnSpacing={3} justifyContent="center">
           <Grid item xs={12} md={6}>

@@ -8,5 +8,6 @@ export type UsePaginationReturn = {
   pageCount: number;
   handlePageChange: (event: ChangeEvent<unknown>, value: number) => void;
   showMoreButton: boolean;
+  showMoreButtonCount: number;
   handleMoreButton: () => void;
 };

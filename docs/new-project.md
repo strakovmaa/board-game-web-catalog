@@ -9,6 +9,8 @@ Návod pro _programátory_.
 
 ## Vercel
 
+Pokud máte na svém účtu více projektů využívajících Redis databázi, změňte **src\app\[locale]\admin_components\config.ts** > `DB_PREFIX`
+
 1. Vytvořte nový projekt přes **Dashboard > Add New Project**
 2. Importujte váš repozitář
 3. V sekci **Configure Project > Build and Output Settings** nastavte **Install Command** na `npm install --force`
@@ -39,7 +41,30 @@ Návod pro _programátory_.
 
 1. Ve Vercelu proveďte **Redeploy**
 2. Zkontrolujte homepage produkčního webu i administraci
-3. V terminálu spusťte `npm run dev` a zkontrolute lokální verzi
+3. V terminálu spusťte `npm run dev` a zkontrolujte lokální verzi
+
+## Klientská grafika
+
+Nezapomeňte změnit tyto věci dle přání klienta:
+
+### Název stránky
+
+- **src\app\[locale]\layout.tsx** > proměnná `metadata.title`
+- **src\messages\cs.json** + **src\messages\cs.json** > proměnná `meta.title`
+
+### Logo + Favicon
+
+Soubory vložte do složky **/public**
+
+- **src\app\[locale]\layout.tsx** > proměnná `metadata.icons`
+- **src\components\app-nav\AppNav.tsx** > Image > `src`
+
+### Font a barvy
+
+- **src\theme\fonts.ts**
+- **src\theme\config.ts**
+
+---
 
 Nyní pokračujte návodem [Správa uživatelů](/users.md)
 

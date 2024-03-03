@@ -14,7 +14,7 @@ export const PageTitle = ({ i18nKey, dense }: Props) => {
   return (
     <Box
       sx={(theme) => ({
-        backgroundColor: theme.palette.secondary.main,
+        backgroundColor: theme.palette.secondary.light,
         p: theme.spacing(ptMobile, 0, pbMobile),
         [theme.breakpoints.up('lg')]: {
           p: theme.spacing(pt, 0, pb),

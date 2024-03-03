@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useLocale } from 'next-intl';
-import { ToggleButton, ToggleButtonGroup, darken } from '@mui/material';
+import { ToggleButton, ToggleButtonGroup, alpha } from '@mui/material';
 import { localeLangOptions } from './config';
 import { MouseEvent } from 'react';
 
@@ -27,8 +27,8 @@ export function LangSwitch() {
           key={value}
           value={value}
           sx={({ palette, spacing }) => ({
-            color: darken(palette.primary.contrastText, 0.3),
-            borderColor: darken(palette.primary.contrastText, 0.5),
+            color: alpha(palette.common.white, 0.6),
+            borderColor: alpha(palette.common.white, 0.4),
             py: spacing(0.25),
           })}
         >

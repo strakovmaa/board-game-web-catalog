@@ -9,7 +9,7 @@ export const NameForm = () => {
   const { control } = useFormContext<NameFilters>();
 
   return (
-    <Box py={4} sx={(theme) => ({ backgroundColor: theme.palette.secondary.main })}>
+    <Box py={4} sx={(theme) => ({ backgroundColor: theme.palette.secondary.light })}>
       <Container>
         <Grid container rowSpacing={3} columnSpacing={3}>
           <Grid item xs={12}>

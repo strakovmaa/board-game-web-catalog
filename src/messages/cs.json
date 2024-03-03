@@ -57,7 +57,7 @@
     }
   },
   "pagination": {
-    "showMore": "Dalších {itemsCount} her"
+    "showMore": "{itemsCount, plural, one {Další} few {Další} other {Dalších}} {itemsCount} {itemsCount, plural, one {hra} few {hry} other {her}}"
   },
   "search": {
     "pageTitle": "Najít hru podle parametrů",

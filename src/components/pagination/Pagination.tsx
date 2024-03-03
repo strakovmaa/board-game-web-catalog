@@ -1,5 +1,4 @@
 import { Button, Pagination as MuiPagination, Stack } from '@mui/material';
-import { PAGINATION_ITEMS_COUNT } from './config';
 import { UsePaginationReturn } from './hooks';
 import { useTranslations } from 'next-intl';
 
@@ -11,6 +10,7 @@ export const Pagination = ({
   pageCount,
   handlePageChange,
   showMoreButton,
+  showMoreButtonCount,
   handleMoreButton,
 }: Props) => {
   const t = useTranslations();
@@ -19,7 +19,7 @@ export const Pagination = ({
     <Stack alignItems="center" gap={3} mb={4}>
       {showMoreButton && (
         <Button variant="contained" size="large" onClick={handleMoreButton}>
-          {t('pagination.showMore', { itemsCount: PAGINATION_ITEMS_COUNT })}
+          {t('pagination.showMore', { itemsCount: showMoreButtonCount })}
         </Button>
       )}
       {showPagination && (

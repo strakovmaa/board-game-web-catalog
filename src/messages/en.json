@@ -57,7 +57,8 @@
     }
   },
   "pagination": {
-    "showMore": "Load more {itemsCount} {itemsCount, plural, one {game} other {games}}"
+    "showMore": "Load {itemsCount} more {itemsCount, plural, one {game} other {games}}",
+    "showMoreGroups": "Load {itemsCount} more {itemsCount, plural, one {section} other {sections}}"
   },
   "search": {
     "pageTitle": "Find game by parameters",
@@ -115,7 +116,8 @@
         "options": {
           "name": "Alphabetical",
           "rating": "By rating",
-          "weight": "By complexity"
+          "weight": "By complexity",
+          "added": "Date added"
         }
       }
     }
@@ -127,6 +129,10 @@
         "label": "Game name (Czech or original)"
       }
     }
+  },
+  "added": {
+    "pageTitle": "Newly added games",
+    "defaultGroupTitle": "Since the beginning of time"
   },
   "bgg": {
     "categories": {

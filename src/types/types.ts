@@ -34,6 +34,7 @@ export type Game = Partial<Pick<BggThing, 'id' | 'primaryName' | 'yearpublished'
     notes?: string[];
     langs?: Lang[];
     location?: string;
+    added?: string;
     categories?: CategoryKey[];
     mechanics?: MechanicKey[];
     averageRating?: Rating;
@@ -58,6 +59,7 @@ export enum GameOrdering {
   NAME = 'name',
   RATING = 'rating',
   WEIGHT = 'weight',
+  ADDED = 'added',
 }
 
 export enum LogRecordState {

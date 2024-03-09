@@ -57,7 +57,8 @@
     }
   },
   "pagination": {
-    "showMore": "{itemsCount, plural, one {Další} few {Další} other {Dalších}} {itemsCount} {itemsCount, plural, one {hra} few {hry} other {her}}"
+    "showMore": "{itemsCount, plural, one {Další} few {Další} other {Dalších}} {itemsCount} {itemsCount, plural, one {hra} few {hry} other {her}}",
+    "showMoreGroups": "{itemsCount, plural, one {Další} few {Další} other {Dalších}} {itemsCount} {itemsCount, plural, one {sekci} few {sekce} other {sekcí}}"
   },
   "search": {
     "pageTitle": "Najít hru podle parametrů",
@@ -115,7 +116,8 @@
         "options": {
           "name": "Abecedně",
           "rating": "Podle hodnocení",
-          "weight": "Podle obtížnosti"
+          "weight": "Podle obtížnosti",
+          "added": "Podle data přidání"
         }
       }
     }
@@ -127,6 +129,10 @@
         "label": "Název hry (český nebo původní)"
       }
     }
+  },
+  "added": {
+    "pageTitle": "Nově přidané hry",
+    "defaultGroupTitle": "Od počátku věků"
   },
   "bgg": {
     "categories": {
